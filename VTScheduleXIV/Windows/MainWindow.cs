@@ -106,14 +106,14 @@ public class MainWindow : Window, IDisposable
     }
 
 
-    public void ManualRefreshTable()
+    public async Task ManualRefreshTable()
     {
         chat.PrintChat(new XivChatEntry() { Type = XivChatType.ErrorMessage, Name = "VTAlert", Message = "Button Pressed" });
         var channelVideosTask = GetChannelVideosAsync();
         var orgVideosTask = GetOrgVideosAsync();
-        Task.WhenAll(channelVideosTask, orgVideosTask).GetAwaiter().GetResult();
-        IReadOnlyCollection<Video> channelVideos = channelVideosTask.Result;
-        IReadOnlyCollection<Video> orgVideos = orgVideosTask.Result;
+        await Task.WhenAll(channelVideosTask, orgVideosTask);
+        IReadOnlyCollection<Video> channelVideos = await channelVideosTask;
+        IReadOnlyCollection<Video> orgVideos = await orgVideosTask;
         relayChanges(channelVideos.Concat(orgVideos).ToList());
         allVideos = channelVideos.Concat(orgVideos).ToList();
     }
