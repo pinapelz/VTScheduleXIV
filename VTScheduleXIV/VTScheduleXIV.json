@@ -1,12 +1,12 @@
 {
-  "Author": "Pinapelz",
-  "Name": "VTSchedule XIV",
-  "Punchline":"Never miss your oshi's stream again'",
-  "Description": "/pvt - Shows the main window for checking schedule",
-  "InternalName": "samplePlugin",
-  "ApplicableVersion": "any",
-  "Tags": [
-    "vtuber",
-    "plugin"
-  ]
+    "Author": "Pinapelz",
+    "Name": "VTScheduleXIV",
+    "Punchline": "Never miss your oshi's stream again'",
+    "Description": "/pvt - Shows the main window for checking schedule",
+    "InternalName": "VStreamTrackerXIV",
+    "ApplicableVersion": "any",
+    "Tags": [
+        "vtuber",
+        "plugin"
+    ]
 }

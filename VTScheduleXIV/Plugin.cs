@@ -33,9 +33,12 @@ namespace VTScheduleXIV
             this.Configuration = this.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
             this.Configuration.Initialize(this.PluginInterface);
 
+            var imagePath = Path.Combine(PluginInterface.AssemblyLocation.Directory?.FullName!, "icon.png");
+            var logoImage = this.PluginInterface.UiBuilder.LoadImage(imagePath);
 
-            ConfigWindow = new ConfigWindow(this);
-            MainWindow = new MainWindow(this, ChatGui);
+
+            ConfigWindow = new ConfigWindow(this, logoImage);
+            MainWindow = new MainWindow(this, ChatGui); 
             
             WindowSystem.AddWindow(ConfigWindow);
             WindowSystem.AddWindow(MainWindow);

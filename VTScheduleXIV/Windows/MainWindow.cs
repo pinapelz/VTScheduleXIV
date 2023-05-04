@@ -30,7 +30,7 @@ public class MainWindow : Window, IDisposable
     {
         this.SizeConstraints = new WindowSizeConstraints
         {
-            MinimumSize = new Vector2(360, 130),
+            MinimumSize = new Vector2(160, 120),
             MaximumSize = new Vector2(float.MaxValue, float.MaxValue)
         };
         client = new HolodexClient(plugin.Configuration.HolodexAPIKey);
@@ -229,6 +229,7 @@ public class MainWindow : Window, IDisposable
         {
             chat.PrintChat(new XivChatEntry() { Type = XivChatType.ErrorMessage, Name = "VTAlert", Message = "Manually Refreshed" });
             ManualRefreshTable();
+         
         }
         DrawTable(allVideos);
 

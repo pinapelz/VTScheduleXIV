@@ -2,14 +2,16 @@ using System;
 using System.Numerics;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
+using ImGuiScene;
 
 namespace VTScheduleXIV.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
+    private TextureWrap logo;
     private Configuration Configuration;
 
-    public ConfigWindow(Plugin plugin) : base(
+    public ConfigWindow(Plugin plugin, TextureWrap logo) : base(
         "Configuration",
         ImGuiWindowFlags.NoScrollbar |
         ImGuiWindowFlags.NoScrollWithMouse)
@@ -20,6 +22,7 @@ public class ConfigWindow : Window, IDisposable
             MaximumSize = new Vector2(float.MaxValue, float.MaxValue)
         };
         this.Configuration = plugin.Configuration;
+        this.logo = logo;
     }
 
 
@@ -63,6 +66,8 @@ public class ConfigWindow : Window, IDisposable
         }
 
         ImGui.Text("Organizations and Channels are separated by commas and are case sensitive as listed on Holodex");
+        ImGui.Image(this.logo.ImGuiHandle, new Vector2(200, 173));
+        
 
 
     }
