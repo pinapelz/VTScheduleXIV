@@ -52,7 +52,6 @@ namespace VTScheduleXIV
         public void Dispose()
         {
             this.WindowSystem.RemoveAllWindows();
-            
             ConfigWindow.Dispose();
             MainWindow.Dispose();
             

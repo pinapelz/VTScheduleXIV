@@ -36,7 +36,9 @@ public class MainWindow : Window, IDisposable
         client = new HolodexClient(plugin.Configuration.HolodexAPIKey);
         this.Plugin = plugin;
         this.chat = chat;
-        allVideos = new List<Video>(); 
+        allVideos = new List<Video>();
+
+
     }
 
     public void Dispose()
@@ -108,7 +110,6 @@ public class MainWindow : Window, IDisposable
 
     public async Task ManualRefreshTable()
     {
-        chat.PrintChat(new XivChatEntry() { Type = XivChatType.ErrorMessage, Name = "VTAlert", Message = "Button Pressed" });
         var channelVideosTask = GetChannelVideosAsync();
         var orgVideosTask = GetOrgVideosAsync();
         await Task.WhenAll(channelVideosTask, orgVideosTask);
@@ -191,10 +192,8 @@ public class MainWindow : Window, IDisposable
 
     private void relayChanges(List<Video> newVideoList) 
     {
-        chat.PrintChat(new XivChatEntry() { Type = XivChatType.Echo, Name = "VTAlert", Message = "DEBUG. Checking for changes!" });
         if (allVideos.Count() == 0)
         {
-            chat.PrintChat(new XivChatEntry() { Type = XivChatType.Echo, Name = "VTAlert", Message = "DEBUG. Return. List is empty" });
             return;
         }
 
@@ -207,7 +206,6 @@ public class MainWindow : Window, IDisposable
 
         foreach (Video video in diff)
         {
-            chat.PrintChat(new XivChatEntry() { Type = XivChatType.ErrorMessage, Name = "VTAlert", Message = "DEBUG. Change found!" });
             if (video.Status == VideoStatus.Live)
             {
                 chat.PrintChat(new XivChatEntry() { Type = XivChatType.ErrorMessage, Name = "VTAlert", Message = 
@@ -221,25 +219,31 @@ public class MainWindow : Window, IDisposable
 
     public override void Draw()
     {
+        ImGui.Text("Time Since Last Refresh: " + (DateTime.Now - lastRefresh).TotalSeconds.ToString());
         if (ImGui.Button("Show Settings"))
         {
             this.Plugin.DrawConfigUI();
         }
+        ImGui.SameLine();
+        if (ImGui.Button("Manual Refresh"))
+        {
+            chat.PrintChat(new XivChatEntry() { Type = XivChatType.ErrorMessage, Name = "VTAlert", Message = "Manually Refreshed" });
+            ManualRefreshTable();
+        }
+        DrawTable(allVideos);
+
+
+    }
+
+    public override void Update()
+    {
         if ((DateTime.Now - lastRefresh).TotalSeconds >= 600)
         {
             ManualRefreshTable();
             lastRefresh = DateTime.Now;
         }
-        else
-        {
-            ImGui.Text((DateTime.Now - lastRefresh).TotalSeconds.ToString());
-        }
-        ImGui.Spacing();
-        if (ImGui.Button("Manual Refresh"))
-        {
-            ManualRefreshTable();
-        }
-        DrawTable(allVideos);
-
     }
+
+    
+
 }
